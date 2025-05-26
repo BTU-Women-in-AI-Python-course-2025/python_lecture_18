@@ -8,7 +8,7 @@
 
 ---
 
-## ✅ 1. `SimpleRouter`
+## 1. `SimpleRouter`
 
 A **minimal router** that handles basic CRUD routes (like list, create, retrieve, update, delete) but does **not** include routes like `/api-auth/`.
 
@@ -36,7 +36,7 @@ It generates URLs like:
 
 ---
 
-## 🔸 2. `DefaultRouter`
+## 2. `DefaultRouter`
 
 `DefaultRouter` extends `SimpleRouter` and **adds a default API root view** (like `/`) and optionally login/logout URLs for the browsable API if `rest_framework.urls` is included in `urlpatterns`.
 
