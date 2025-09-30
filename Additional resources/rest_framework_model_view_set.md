@@ -146,12 +146,12 @@ class ProductDetailViewSet(mixins.RetrieveModelMixin,
     serializer_class = ProductSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response({
-            "product": serializer.data,
-            "note": "Detailed view of a single product"
-        })
+        response = super().retrieve(request, *args, **kwargs)
+        response.data = {
+            "product_detail": response.data,
+            "note": "This is a single product retrieved via super()"
+        }
+        return response
 ```
 
 ---
