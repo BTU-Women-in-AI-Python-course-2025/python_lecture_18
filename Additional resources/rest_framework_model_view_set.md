@@ -111,12 +111,12 @@ class ProductListViewSet(mixins.ListModelMixin,
     serializer_class = ProductSerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response({
-            "count": queryset.count(),
-            "products": serializer.data
-        })
+        response = super().list(request, *args, **kwargs)
+        response.data = {
+            "total_products": self.get_queryset().count(),  
+            "paginated_results": response.data              
+        }
+        return response
 ```
 
 ---
