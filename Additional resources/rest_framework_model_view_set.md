@@ -216,14 +216,28 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response({"message": "Deleted via overridden method"})
 ```
 
-✅ Equivalent to combining:
+## 🔹 Using Different Serializers in `ModelViewSet`
 
-* `CreateModelMixin`
-* `ListModelMixin`
-* `RetrieveModelMixin`
-* `UpdateModelMixin`
-* `DestroyModelMixin`
-* `GenericViewSet`
+```python
+from rest_framework import viewsets
+from .models import Product
+from .serializers import (
+    ProductSerializer,         # default serializer
+    ProductCreateSerializer,   # for create
+    ProductDetailSerializer    # for retrieve
+)
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer  # default serializer
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ProductCreateSerializer
+        elif self.action == 'retrieve':
+            return ProductDetailSerializer
+        return ProductSerializer
+```
 
 ---
 
