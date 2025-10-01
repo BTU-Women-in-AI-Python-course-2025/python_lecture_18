@@ -49,6 +49,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
 ## 🧪 Example in a View
 
 ```python
+# example 1
 @api_view(['GET'])
 def user_detail(request, pk):
     user = User.objects.get(pk=pk)
@@ -61,6 +62,19 @@ def user_detail(request, pk):
         serializer = UserSerializer(user)
 
     return Response(serializer.data)
+```
+```python
+# example 2
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == 'list':
+            kwargs['fields'] = ('first_name', 'last_name')
+        elif self.action == 'update':
+            kwargs['fields'] = ('first_name', 'last_name', 'email')
+        return super().get_serializer(*args, **kwargs)
 ```
 
 **GET /api/users/1/?fields=id,username**
