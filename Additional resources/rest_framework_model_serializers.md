@@ -20,9 +20,9 @@ Use when:
 
 ---
 
-## 🧱 Example: `BookSerializer`
+## Example: `BookSerializer`
 
-### 📁 `models.py`
+### `models.py`
 
 ```python
 from django.db import models
