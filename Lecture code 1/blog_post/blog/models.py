@@ -47,6 +47,10 @@ class BlogPost(models.Model):
     def get_images(self):
         return BlogPostImage.objects.filter(blog_post=self.id)
 
+    # @property
+    # def banner_image(self):
+    #     return self.banner_image if self.banner_image else None
+
     class Meta:
         verbose_name = "Blog Post"
         verbose_name_plural = "Blog Posts"
