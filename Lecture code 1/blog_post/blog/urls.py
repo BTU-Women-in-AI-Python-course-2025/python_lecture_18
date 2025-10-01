@@ -7,7 +7,8 @@ from blog.views import (
     BlogPostCreateViewSet,
     BlogPostUpdateViewSet,
     BlogPostDeleteViewSet,
-    BlogPostViewSet
+    BlogPostViewSet,
+    AuthorViewSet
 )
 
 
@@ -18,6 +19,7 @@ router.register(r'blog_post_update', BlogPostUpdateViewSet, basename='blogpost-u
 router.register(r'blog_post_delete', BlogPostDeleteViewSet, basename='blogpost-delete')
 router.register(r'blog_post_create', BlogPostCreateViewSet, basename='blogpost-create')
 router.register(r'blog_post', BlogPostViewSet, basename='blogpost')
+router.register(r'author', AuthorViewSet, basename='author')
 
 urlpatterns = [
     path('', include(router.urls)),

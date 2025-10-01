@@ -1,5 +1,23 @@
 from rest_framework import serializers
-from blog.models import BlogPost, BannerImage
+from blog.models import BlogPost, BannerImage, Author
+
+
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
+class AuthorSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Author
+        fields = ['id', 'first_name', 'last_name', 'email']
 
 
 class BannerImageSerializer(serializers.ModelSerializer):
