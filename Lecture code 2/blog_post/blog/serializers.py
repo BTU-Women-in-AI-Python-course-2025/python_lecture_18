@@ -15,9 +15,15 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 
 class AuthorSerializer(DynamicFieldsModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_full_name(obj):
+        return f"{obj.first_name} {obj.last_name}"
+
     class Meta:
         model = Author
-        fields = ['id', 'first_name', 'last_name', 'email', 'birth_date', 'age']
+        fields = ['id', 'full_name', 'first_name', 'last_name', 'email', 'birth_date', 'age']
 
 
 class BlogPostListSerializer(serializers.ModelSerializer):
