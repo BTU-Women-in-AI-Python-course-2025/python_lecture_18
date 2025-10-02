@@ -1,4 +1,5 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from blog.models import BlogPost
@@ -48,3 +49,17 @@ class BlogPostViewSet(ModelViewSet):
             return BlogPostCreateUpdateSerializer
         else:
             return BlogPostListSerializer
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data = {
+            "total_products": self.get_queryset().count(),
+            "paginated_results": response.data
+        }
+        return response
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.deleted = True
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
