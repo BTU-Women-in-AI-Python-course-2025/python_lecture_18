@@ -2,11 +2,11 @@ from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from blog.models import BlogPost
+from blog.models import BlogPost, Author
 from blog.serializers import (
     BlogPostListSerializer,
     BlogPostDetailSerializer,
-    BlogPostCreateUpdateSerializer
+    BlogPostCreateUpdateSerializer, AuthorSerializer
 )
 
 class BlogPostListViewSet(mixins.ListModelMixin,
@@ -63,3 +63,15 @@ class BlogPostViewSet(ModelViewSet):
         instance.deleted = True
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == 'list':
+            kwargs['fields'] = ('first_name', 'last_name')
+        elif self.action == 'update':
+            kwargs['fields'] = ('first_name', 'last_name', 'email')
+        return super().get_serializer(*args, **kwargs)

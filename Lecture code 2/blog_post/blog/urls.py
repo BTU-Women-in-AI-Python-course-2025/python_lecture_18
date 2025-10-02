@@ -6,7 +6,8 @@ from blog.views import (
     BlogPostCreateViewSet,
     BlogPostUpdateViewSet,
     BlogPostDeleteViewSet,
-    BlogPostViewSet
+    BlogPostViewSet,
+    AuthorViewSet
 )
 
 router = DefaultRouter()
@@ -16,6 +17,7 @@ router.register(r'blog_post_create', BlogPostCreateViewSet, basename='blog_post_
 router.register(r'blog_post_update', BlogPostUpdateViewSet, basename='blog_post_update')
 router.register(r'blog_post_delete', BlogPostDeleteViewSet, basename='blog_post_delete')
 router.register(r'blogpost', BlogPostViewSet, basename='blogpost')
+router.register(r'author', AuthorViewSet, basename='author')
 
 
 urlpatterns = [
